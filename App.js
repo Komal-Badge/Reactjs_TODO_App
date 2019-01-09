@@ -16,7 +16,9 @@ class App extends Component {
     event.preventDefault();
     let newTaskValue = event.target.elements.TaskName.value;
     if (newTaskValue) {
-      this.state.taskList.push({ "taskName": newTaskValue, "id": this.state.taskList.length + 1, "className": "undone_Task" });
+      let currentTaskList = this.state.taskList;
+      currentTaskList.push({ "taskName": newTaskValue, "id": currentTaskList.length + 1, "className": "undone_Task" });
+      this.setTaskList(currentTaskList);
       this.setLocalStorage();
       event.target.elements.TaskName.value = "";
     } else {
@@ -27,25 +29,33 @@ class App extends Component {
   // Delete Task
   deleteTask(index) {
     if (window.confirm("Are you sure you want to delete task?")) {
-      this.confirm_delete(index);
+      this.confirmDelete(index);
     }
   }
-  confirm_delete(index) {
-    this.state.taskList.splice(index, 1);
+  confirmDelete(index) {
+    let taskItemsList = this.state.taskList;
+    taskItemsList.splice(index, 1);
+    this.setTaskList(taskItemsList);
     this.setLocalStorage();
+  }
+
+  //Set State
+  setTaskList(currentTaskList) {
+    this.setState({ "taskList": currentTaskList });
   }
 
   // Mark Task as Completed
   taskCompleted(event, index) {
     let assignClassName;
     event.target.checked === true ? assignClassName = "done_Task" : assignClassName = "undone_Task";
-    this.state.taskList[index].className = assignClassName;
+    let tempTaskList = this.state.taskList;
+    tempTaskList[index].className = assignClassName;
+    this.setTaskList(tempTaskList);
     this.setLocalStorage();
   }
 
   // Set task list in local storage
   setLocalStorage() {
-    this.setState({ "taskList": this.state.taskList });
     localStorage.setItem("taskList", JSON.stringify(this.state.taskList));
   }
 

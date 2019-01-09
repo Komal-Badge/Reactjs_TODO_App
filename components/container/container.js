@@ -10,7 +10,7 @@ class Container extends Component {
             <div className="row">
               <div className="col-10"></div>
               <div className="col-70">
-                <input type="text" className="Input-Box" id="addTaskName" name="TaskName" placeholder="Add your Task.." />
+                <input type="text" className="Input-Box" id="addTaskName" autoComplete="off" name="TaskName" placeholder="Add your Task.." />
               </div>
               <div className="col-20">
                 <input type="submit" className="AddTask Input-Box" placeholder="Add Task" />
@@ -24,7 +24,7 @@ class Container extends Component {
           <div className="toDoList">
             <table id="taskList">
               <tbody>
-                <tr >
+                <tr>
                   <th></th>
                   <th>Task</th>
                   <th></th>
